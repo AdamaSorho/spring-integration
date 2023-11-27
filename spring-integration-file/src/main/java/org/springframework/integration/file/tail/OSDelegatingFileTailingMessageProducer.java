@@ -16,6 +16,7 @@
 
 package org.springframework.integration.file.tail;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -189,7 +190,7 @@ public class OSDelegatingFileTailingMessageProducer extends FileTailingMessagePr
 					String statusMessage;
 					logger.debug("Reading stderr");
 					try {
-						while ((statusMessage = errorReader.readLine()) != null) {
+						while ((statusMessage = BoundedLineReader.readLine(errorReader, 5_000_000)) != null) {
 							publish(statusMessage);
 							logger.trace(statusMessage);
 						}
@@ -216,7 +217,7 @@ public class OSDelegatingFileTailingMessageProducer extends FileTailingMessagePr
 		String line;
 		try {
 			logger.debug("Reading stdout");
-			while ((line = this.stdOutReader.readLine()) != null) {
+			while ((line = BoundedLineReader.readLine(this.stdOutReader, 5_000_000)) != null) {
 				send(line);
 			}
 		}
