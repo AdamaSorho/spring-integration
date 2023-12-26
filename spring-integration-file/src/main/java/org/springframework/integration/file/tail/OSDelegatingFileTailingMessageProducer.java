@@ -16,6 +16,7 @@
 
 package org.springframework.integration.file.tail;
 
+import io.github.pixee.security.SystemCommand;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -122,7 +123,7 @@ public class OSDelegatingFileTailingMessageProducer extends FileTailingMessagePr
 		destroyProcess();
 		logger.info("Starting tail process");
 		try {
-			Process process = Runtime.getRuntime().exec(this.tailCommand);
+			Process process = SystemCommand.runCommand(Runtime.getRuntime(), this.tailCommand);
 			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 			this.nativeTailProcess = process;
 			startProcessMonitor();
