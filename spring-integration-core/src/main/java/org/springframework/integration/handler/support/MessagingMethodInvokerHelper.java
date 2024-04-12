@@ -783,7 +783,7 @@ public class MessagingMethodInvokerHelper extends AbstractExpressionEvaluator im
 		return !(method.isSynthetic() ||
 				ReflectionUtils.isObjectMethod(method) ||
 				AnnotatedElementUtils.isAnnotated(method, "groovy.transform.Generated") ||
-				declaringClass.getName().equals("groovy.lang.GroovyObject") ||
+				"groovy.lang.GroovyObject".equals(declaringClass.getName()) ||
 				declaringClass.equals(Proxy.class) ||
 				(this.requiresReply && void.class.equals(method.getReturnType())) ||
 				(this.methodName != null && !this.methodName.equals(method.getName())) ||

@@ -234,7 +234,7 @@ public abstract class ClassUtils {
 		Class<?> aClass = candidate.getClass();
 		return isLambda(aClass) ||
 				(Proxy.isProxyClass(aClass)  // Groovy Closure is a Lambda in Java terms
-						&& Proxy.getInvocationHandler(candidate).getClass().getSimpleName().equals("ConvertedClosure"));
+						&& "ConvertedClosure".equals(Proxy.getInvocationHandler(candidate).getClass().getSimpleName()));
 	}
 
 	/**

@@ -46,7 +46,7 @@ public class UdpOutboundChannelAdapterParser extends AbstractOutboundChannelAdap
 	private BeanDefinitionBuilder parseUdp(Element element, ParserContext parserContext) {
 		BeanDefinitionBuilder builder;
 		String multicast = IpAdapterParserUtils.getMulticast(element);
-		if (multicast.equals("true")) {
+		if ("true".equals(multicast)) {
 			builder = BeanDefinitionBuilder.genericBeanDefinition(MulticastSendingMessageHandler.class);
 			IntegrationNamespaceUtils.setValueIfAttributeDefined(builder,
 					element, IpAdapterParserUtils.MIN_ACKS_SUCCESS,
@@ -65,7 +65,7 @@ public class UdpOutboundChannelAdapterParser extends AbstractOutboundChannelAdap
 		IpAdapterParserUtils.addConstructorValueIfAttributeDefined(builder, element, IpAdapterParserUtils.ACK_PORT);
 		IpAdapterParserUtils.addConstructorValueIfAttributeDefined(builder, element, IpAdapterParserUtils.ACK_TIMEOUT);
 		String ack = element.getAttribute(IpAdapterParserUtils.ACK);
-		if (ack.equals("true") &&
+		if ("true".equals(ack) &&
 				(!StringUtils.hasText(element
 						.getAttribute(IpAdapterParserUtils.ACK_HOST))
 						|| !StringUtils.hasText(element

@@ -62,8 +62,8 @@ public class KafkaInboundGatewayParser extends AbstractInboundGatewayParser {
 	@Override
 	protected boolean isEligibleAttribute(String attributeName) {
 		return super.isEligibleAttribute(attributeName)
-				&& !attributeName.equals("listener-container")
-				&& !attributeName.equals("kafka-template");
+				&& !"listener-container".equals(attributeName)
+				&& !"kafka-template".equals(attributeName);
 	}
 
 }

@@ -90,7 +90,7 @@ public abstract class AbstractXmlTransformer extends AbstractTransformer {
 		ResultFactory configuredResultFactory = null;
 		Assert.state(!bothHaveText, "Only one of 'result-factory' or 'result-type' should be specified.");
 		if (StringUtils.hasText(resultType)) {
-			Assert.state(resultType.equals(DOM_RESULT) || resultType.equals(STRING_RESULT),
+			Assert.state(DOM_RESULT.equals(resultType) || STRING_RESULT.equals(resultType),
 					"Result type must be either 'DOMResult' or 'StringResult'");
 		}
 		if (StringUtils.hasText(resultFactoryName)) {

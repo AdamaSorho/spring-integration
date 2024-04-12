@@ -66,7 +66,7 @@ public class ReactiveRequestHandlerAdvice implements MethodInterceptor {
 		Object invocationThis = invocation.getThis();
 		Object[] arguments = invocation.getArguments();
 		boolean isReactiveMethod =
-				method.getName().equals("handleRequestMessage") &&
+				"handleRequestMessage".equals(method.getName()) &&
 						(arguments.length == 1 && arguments[0] instanceof Message) &&
 						result instanceof Mono<?>;
 		if (!isReactiveMethod) {

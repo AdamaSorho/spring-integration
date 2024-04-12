@@ -65,7 +65,7 @@ public class UdpInboundChannelAdapterParser extends AbstractChannelAdapterParser
 	private BeanDefinitionBuilder parseUdp(Element element, ParserContext parserContext) {
 		BeanDefinitionBuilder builder;
 		String multicast = IpAdapterParserUtils.getMulticast(element);
-		if (multicast.equals("false")) {
+		if ("false".equals(multicast)) {
 			builder = BeanDefinitionBuilder.genericBeanDefinition(UnicastReceivingChannelAdapter.class);
 		}
 		else {

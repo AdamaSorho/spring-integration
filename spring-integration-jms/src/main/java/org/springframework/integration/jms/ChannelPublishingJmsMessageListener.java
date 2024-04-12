@@ -416,7 +416,7 @@ public class ChannelPublishingJmsMessageListener
 			jakarta.jms.Message replyMessage) throws JMSException {
 
 		if (this.correlationKey != null) {
-			if (this.correlationKey.equals("JMSCorrelationID")) {
+			if ("JMSCorrelationID".equals(this.correlationKey)) {
 				replyMessage.setJMSCorrelationID(requestMessage.getJMSCorrelationID());
 			}
 			else {

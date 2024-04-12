@@ -229,7 +229,7 @@ public final class JacksonJsonUtils {
 			if (!this.trustedPackages.isEmpty()) {
 				for (String trustedPackage : this.trustedPackages) {
 					if (packageName.equals(trustedPackage) ||
-							(!packageName.equals("java.util.logging")
+							(!"java.util.logging".equals(packageName)
 									&& packageName.startsWith(trustedPackage + "."))) {
 
 						return true;

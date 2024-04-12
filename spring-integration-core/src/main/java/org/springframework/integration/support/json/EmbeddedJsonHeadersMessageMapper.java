@@ -127,7 +127,7 @@ public class EmbeddedJsonHeadersMessageMapper implements BytesMessageMapper {
 	public EmbeddedJsonHeadersMessageMapper(ObjectMapper objectMapper, String... headerPatterns) {
 		this.objectMapper = objectMapper;
 		this.headerPatterns = Arrays.copyOf(headerPatterns, headerPatterns.length);
-		this.allHeaders = this.headerPatterns.length == 1 && this.headerPatterns[0].equals("*");
+		this.allHeaders = this.headerPatterns.length == 1 && "*".equals(this.headerPatterns[0]);
 	}
 
 	/**
