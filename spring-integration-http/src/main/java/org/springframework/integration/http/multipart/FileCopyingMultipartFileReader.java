@@ -16,6 +16,7 @@
 
 package org.springframework.integration.http.multipart;
 
+import io.github.pixee.security.Filenames;
 import java.io.File;
 import java.io.IOException;
 
@@ -85,9 +86,9 @@ public class FileCopyingMultipartFileReader implements MultipartFileReader<Multi
 		File upload = File.createTempFile(this.prefix, this.suffix, this.directory);
 		multipartFile.transferTo(upload);
 		UploadedMultipartFile uploadedMultipartFile = new UploadedMultipartFile(upload, multipartFile.getSize(),
-				multipartFile.getContentType(), multipartFile.getName(), multipartFile.getOriginalFilename());
+				multipartFile.getContentType(), multipartFile.getName(), Filenames.toSimpleFileName(multipartFile.getOriginalFilename()));
 		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("copied uploaded file [" + multipartFile.getOriginalFilename() +
+			LOGGER.debug("copied uploaded file [" + Filenames.toSimpleFileName(multipartFile.getOriginalFilename()) +
 					"] to [" + upload.getAbsolutePath() + "]");
 		}
 		return uploadedMultipartFile;

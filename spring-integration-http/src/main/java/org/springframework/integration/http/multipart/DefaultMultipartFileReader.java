@@ -16,6 +16,7 @@
 
 package org.springframework.integration.http.multipart;
 
+import io.github.pixee.security.Filenames;
 import java.io.IOException;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -32,7 +33,7 @@ public class DefaultMultipartFileReader implements MultipartFileReader<Multipart
 
 	public MultipartFile readMultipartFile(MultipartFile multipartFile) throws IOException {
 		return new UploadedMultipartFile(multipartFile.getBytes(),
-				multipartFile.getContentType(), multipartFile.getName(), multipartFile.getOriginalFilename());
+				multipartFile.getContentType(), multipartFile.getName(), Filenames.toSimpleFileName(multipartFile.getOriginalFilename()));
 	}
 
 }
