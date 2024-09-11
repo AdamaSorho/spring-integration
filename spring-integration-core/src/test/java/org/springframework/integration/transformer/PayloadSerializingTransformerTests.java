@@ -16,6 +16,7 @@
 
 package org.springframework.integration.transformer;
 
+import io.github.pixee.security.ObjectInputFilters;
 import java.io.ByteArrayInputStream;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
@@ -42,6 +43,7 @@ public class PayloadSerializingTransformerTests {
 		assertThat(payload instanceof byte[]).isTrue();
 		ByteArrayInputStream byteStream = new ByteArrayInputStream((byte[]) payload);
 		ObjectInputStream objectStream = new ObjectInputStream(byteStream);
+		ObjectInputFilters.enableObjectFilterIfUnprotected(objectStream);
 		Object deserialized = objectStream.readObject();
 		assertThat(deserialized).isEqualTo("foo");
 	}
@@ -56,6 +58,7 @@ public class PayloadSerializingTransformerTests {
 		assertThat(payload instanceof byte[]).isTrue();
 		ByteArrayInputStream byteStream = new ByteArrayInputStream((byte[]) payload);
 		ObjectInputStream objectStream = new ObjectInputStream(byteStream);
+		ObjectInputFilters.enableObjectFilterIfUnprotected(objectStream);
 		Object deserialized = objectStream.readObject();
 		assertThat(deserialized.getClass()).isEqualTo(TestBean.class);
 		assertThat(((TestBean) deserialized).name).isEqualTo(testBean.name);

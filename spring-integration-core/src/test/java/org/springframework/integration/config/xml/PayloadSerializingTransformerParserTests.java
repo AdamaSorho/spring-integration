@@ -16,6 +16,7 @@
 
 package org.springframework.integration.config.xml;
 
+import io.github.pixee.security.ObjectInputFilters;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -117,6 +118,7 @@ public class PayloadSerializingTransformerParserTests {
 	private static Object deserialize(byte[] bytes) throws Exception {
 		ByteArrayInputStream byteStream = new ByteArrayInputStream(bytes);
 		ObjectInputStream objectStream = new ObjectInputStream(byteStream);
+		ObjectInputFilters.enableObjectFilterIfUnprotected(objectStream);
 		return objectStream.readObject();
 	}
 

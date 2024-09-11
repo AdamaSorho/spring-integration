@@ -16,6 +16,7 @@
 
 package org.springframework.integration.message;
 
+import io.github.pixee.security.ObjectInputFilters;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
@@ -150,6 +151,7 @@ public class MessageHeadersTests {
 		out.close();
 		ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
 		ObjectInputStream in = new ObjectInputStream(bais);
+		ObjectInputFilters.enableObjectFilterIfUnprotected(in);
 		Object result = in.readObject();
 		in.close();
 		return result;

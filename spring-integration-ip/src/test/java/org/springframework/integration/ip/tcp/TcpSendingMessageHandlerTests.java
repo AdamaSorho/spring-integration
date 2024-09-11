@@ -16,6 +16,7 @@
 
 package org.springframework.integration.ip.tcp;
 
+import io.github.pixee.security.ObjectInputFilters;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -513,6 +514,7 @@ public class TcpSendingMessageHandlerTests extends AbstractTcpChannelAdapterTest
 				int i = 0;
 				while (true) {
 					ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+					ObjectInputFilters.enableObjectFilterIfUnprotected(ois);
 					ois.readObject();
 					ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
 					oos.writeObject("Reply" + (++i));
@@ -565,6 +567,7 @@ public class TcpSendingMessageHandlerTests extends AbstractTcpChannelAdapterTest
 				int i = 0;
 				while (true) {
 					ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+					ObjectInputFilters.enableObjectFilterIfUnprotected(ois);
 					ois.readObject();
 					ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
 					oos.writeObject("Reply" + (++i));
@@ -920,6 +923,7 @@ public class TcpSendingMessageHandlerTests extends AbstractTcpChannelAdapterTest
 				int i = 0;
 				while (true) {
 					ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+					ObjectInputFilters.enableObjectFilterIfUnprotected(ois);
 					Object in = null;
 					ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
 					if (i == 0) {
@@ -991,6 +995,7 @@ public class TcpSendingMessageHandlerTests extends AbstractTcpChannelAdapterTest
 				int i = 100;
 				while (true) {
 					ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+					ObjectInputFilters.enableObjectFilterIfUnprotected(ois);
 					Object in;
 					ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
 					if (i == 100) {
@@ -1058,6 +1063,7 @@ public class TcpSendingMessageHandlerTests extends AbstractTcpChannelAdapterTest
 				latch.countDown();
 				Socket socket = server.accept();
 				ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+				ObjectInputFilters.enableObjectFilterIfUnprotected(ois);
 				ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
 				Object in = ois.readObject();
 				logger.debug("read object: " + in);
@@ -1116,6 +1122,7 @@ public class TcpSendingMessageHandlerTests extends AbstractTcpChannelAdapterTest
 				latch.countDown();
 				Socket socket = server.accept();
 				ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+				ObjectInputFilters.enableObjectFilterIfUnprotected(ois);
 				ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
 				Object in = ois.readObject();
 				logger.debug("read object: " + in);
