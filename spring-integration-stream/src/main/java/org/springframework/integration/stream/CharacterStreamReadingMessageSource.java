@@ -16,6 +16,7 @@
 
 package org.springframework.integration.stream;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -122,7 +123,7 @@ public class CharacterStreamReadingMessageSource extends AbstractMessageSource<S
 				if (!this.blockToDetectEOF && !this.reader.ready()) {
 					return null;
 				}
-				String line = this.reader.readLine();
+				String line = BoundedLineReader.readLine(this.reader, 5_000_000);
 				if (line == null && this.applicationEventPublisher != null) {
 					this.applicationEventPublisher.publishEvent(new StreamClosedEvent(this));
 				}
