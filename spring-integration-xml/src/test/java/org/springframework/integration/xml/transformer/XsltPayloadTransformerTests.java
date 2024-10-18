@@ -18,6 +18,7 @@ package org.springframework.integration.xml.transformer;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 
 import javax.xml.transform.Result;
 import javax.xml.transform.Templates;
@@ -271,7 +272,7 @@ public class XsltPayloadTransformerTests {
 				""";
 
 		this.temporaryFolder.mkdir();
-		File xsltFile = File.createTempFile("test", null, this.temporaryFolder);
+		File xsltFile = Files.createTempFile(this.temporaryFolder.toPath(), "test", null).toFile();
 		FileCopyUtils.copy(xsl.getBytes(), xsltFile);
 		return new FileSystemResource(xsltFile);
 	}

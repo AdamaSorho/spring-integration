@@ -26,6 +26,7 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.time.Duration;
 import java.util.Date;
 import java.util.List;
@@ -225,7 +226,7 @@ public class FileSplitterTests {
 		QueueChannel outputChannel = new QueueChannel();
 		FileSplitter splitter = new FileSplitter(true, true);
 		splitter.setOutputChannel(outputChannel);
-		File file = File.createTempFile("empty", ".txt");
+		File file = Files.createTempFile("empty", ".txt").toFile();
 		splitter.handleMessage(new GenericMessage<>(file));
 		Message<?> received = outputChannel.receive(0);
 		assertThat(received).isNotNull();
@@ -349,7 +350,7 @@ public class FileSplitterTests {
 		FileSplitter splitter = new FileSplitter(true, true);
 		splitter.setFirstLineAsHeader("firstLine");
 		splitter.setOutputChannel(outputChannel);
-		File file = File.createTempFile("empty", ".txt");
+		File file = Files.createTempFile("empty", ".txt").toFile();
 		splitter.handleMessage(new GenericMessage<>(file));
 		Message<?> received = outputChannel.receive(0);
 		assertThat(received).isNotNull();

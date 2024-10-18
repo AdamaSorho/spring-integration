@@ -18,6 +18,7 @@ package org.springframework.integration.file;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -72,12 +73,12 @@ public class WatchServiceDirectoryScannerTests {
 		this.foo.mkdir();
 		this.bar = new File(rootDir, "bar");
 		this.bar.mkdir();
-		this.top1 = File.createTempFile("tmp", null, this.rootDir);
-		this.foo1 = File.createTempFile("foo", ".txt", this.foo);
-		this.bar1 = File.createTempFile("bar", ".txt", this.bar);
+		this.top1 = Files.createTempFile(this.rootDir.toPath(), "tmp", null).toFile();
+		this.foo1 = Files.createTempFile(this.foo.toPath(), "foo", ".txt").toFile();
+		this.bar1 = Files.createTempFile(this.bar.toPath(), "bar", ".txt").toFile();
 		this.skipped = new File(rootDir, "skipped");
 		this.skipped.mkdir();
-		this.skippedFile = File.createTempFile("skippedFile", null, this.skipped);
+		this.skippedFile = Files.createTempFile(this.skipped.toPath(), "skippedFile", null).toFile();
 	}
 
 	@Test
@@ -127,12 +128,12 @@ public class WatchServiceDirectoryScannerTests {
 		assertThat(files).contains(bar1);
 		assertThat(files).doesNotContain(this.skippedFile);
 		fileReadingMessageSource.start();
-		File top2 = File.createTempFile("tmp", null, this.rootDir);
-		File foo2 = File.createTempFile("foo", ".txt", this.foo);
-		File bar2 = File.createTempFile("bar", ".txt", this.bar);
+		File top2 = Files.createTempFile(this.rootDir.toPath(), "tmp", null).toFile();
+		File foo2 = Files.createTempFile(this.foo.toPath(), "foo", ".txt").toFile();
+		File bar2 = Files.createTempFile(this.bar.toPath(), "bar", ".txt").toFile();
 		File baz = new File(this.foo, "baz");
 		baz.mkdir();
-		File baz1 = File.createTempFile("baz", ".txt", baz);
+		File baz1 = Files.createTempFile(baz.toPath(), "baz", ".txt").toFile();
 		files = scanner.listFiles(this.rootDir);
 		int n = 0;
 		Set<File> accum = new HashSet<>(files);
@@ -156,7 +157,7 @@ public class WatchServiceDirectoryScannerTests {
 		List<File> filesForOverflow = new ArrayList<>(600);
 
 		for (int i = 0; i < 600; i++) {
-			filesForOverflow.add(File.createTempFile("tmp" + i, null, this.rootDir));
+			filesForOverflow.add(Files.createTempFile(this.rootDir.toPath(), "tmp" + i, null).toFile());
 		}
 
 		n = 0;
@@ -170,7 +171,7 @@ public class WatchServiceDirectoryScannerTests {
 
 		assertThat(accum).containsAll(filesForOverflow);
 
-		File baz2 = File.createTempFile("baz2", ".txt", baz);
+		File baz2 = Files.createTempFile(baz.toPath(), "baz2", ".txt").toFile();
 
 		n = 0;
 		while (n++ < 300 && accum.size() < 605) {
@@ -207,7 +208,7 @@ public class WatchServiceDirectoryScannerTests {
 
 		assertThat(removeFileLatch.await(10, TimeUnit.SECONDS)).isTrue();
 
-		File baz3 = File.createTempFile("baz3", ".txt", baz);
+		File baz3 = Files.createTempFile(baz.toPath(), "baz3", ".txt").toFile();
 
 		n = 0;
 		Message<File> fileMessage = null;

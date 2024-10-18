@@ -19,6 +19,7 @@ package org.springframework.integration.file.tail;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -103,9 +104,9 @@ public class FileTailingMessageProducerTests {
 	@Test
 	@TailAvailable
 	public void canRecalculateCommandWhenFileOrOptionsChanged() throws IOException {
-		File firstFile = File.createTempFile("first", ".txt");
+		File firstFile = Files.createTempFile("first", ".txt").toFile();
 		String firstOptions = "-f options";
-		File secondFile = File.createTempFile("second", ".txt");
+		File secondFile = Files.createTempFile("second", ".txt").toFile();
 		String secondOptions = "-f newoptions";
 		OSDelegatingFileTailingMessageProducer adapter = new OSDelegatingFileTailingMessageProducer();
 		adapter.setFile(firstFile);
@@ -264,7 +265,7 @@ public class FileTailingMessageProducerTests {
 	@Test
 	@TailAvailable
 	public void canHandleFilenameHavingSpecialCharacters() throws Exception {
-		File file = File.createTempFile("foo bar", " -c 1");
+		File file = Files.createTempFile("foo bar", " -c 1").toFile();
 		file.delete();
 
 		OSDelegatingFileTailingMessageProducer adapter = new OSDelegatingFileTailingMessageProducer();

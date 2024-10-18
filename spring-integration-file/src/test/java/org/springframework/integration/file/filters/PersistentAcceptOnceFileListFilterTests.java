@@ -20,6 +20,7 @@ import java.io.Closeable;
 import java.io.File;
 import java.io.Flushable;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -69,7 +70,7 @@ public class PersistentAcceptOnceFileListFilterTests extends AcceptOnceFileListF
 		};
 		final FileSystemPersistentAcceptOnceFileListFilter filter =
 				new FileSystemPersistentAcceptOnceFileListFilter(store, "foo:");
-		final File file = File.createTempFile("foo", ".txt");
+		final File file = Files.createTempFile("foo", ".txt").toFile();
 		assertThat(filter.filterFiles(new File[] {file}).size()).isEqualTo(1);
 		String ts = store.get("foo:" + file.getAbsolutePath());
 		assertThat(ts).isEqualTo(String.valueOf(file.lastModified()));
@@ -172,7 +173,7 @@ public class PersistentAcceptOnceFileListFilterTests extends AcceptOnceFileListF
 		String prefix = "flush:";
 		FileSystemPersistentAcceptOnceFileListFilter filter = new FileSystemPersistentAcceptOnceFileListFilter(
 				store, prefix);
-		final File file = File.createTempFile("foo", ".txt");
+		final File file = Files.createTempFile("foo", ".txt").toFile();
 		File[] files = new File[] {file};
 		List<File> passed = filter.filterFiles(files);
 		assertThat(Arrays.equals(files, passed.toArray())).isTrue();

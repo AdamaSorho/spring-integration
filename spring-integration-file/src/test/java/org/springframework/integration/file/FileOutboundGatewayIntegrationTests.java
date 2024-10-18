@@ -18,6 +18,7 @@ package org.springframework.integration.file;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.nio.file.Files;
 import java.util.List;
 
 import org.junit.After;
@@ -97,7 +98,7 @@ public class FileOutboundGatewayIntegrationTests {
 
 	@Before
 	public void setUp() throws Exception {
-		sourceFile = File.createTempFile("anyFile", ".txt");
+		sourceFile = Files.createTempFile("anyFile", ".txt").toFile();
 		sourceFile.deleteOnExit();
 		FileCopyUtils.copy(SAMPLE_CONTENT.getBytes(DEFAULT_ENCODING),
 				new FileOutputStream(sourceFile, false));

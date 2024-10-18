@@ -19,6 +19,7 @@ package org.springframework.integration.zip;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -102,7 +103,7 @@ public class Zip2FileTests {
 
 	@Test
 	public void zipFile() throws IOException {
-		File fileToCompress = File.createTempFile("test1", "tmp");
+		File fileToCompress = Files.createTempFile("test1", "tmp").toFile();
 		FileUtils.writeStringToFile(fileToCompress, "hello world", Charset.defaultCharset());
 
 		input.send(MessageBuilder.withPayload(fileToCompress).build());
@@ -138,7 +139,7 @@ public class Zip2FileTests {
 
 		String stringToCompress = "String1";
 		byte[] bytesToCompress = "String2".getBytes();
-		File fileToCompress = File.createTempFile("test2", "tmp");
+		File fileToCompress = Files.createTempFile("test2", "tmp").toFile();
 		FileUtils.writeStringToFile(fileToCompress, "hello world", Charset.defaultCharset());
 
 		final List<Object> objectsToCompress = new ArrayList<>(3);
