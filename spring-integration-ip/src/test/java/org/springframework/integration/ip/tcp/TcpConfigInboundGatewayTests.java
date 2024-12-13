@@ -16,6 +16,7 @@
 
 package org.springframework.integration.ip.tcp;
 
+import static io.github.pixee.security.ObjectInputFilters.createSafeObjectInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -225,7 +226,7 @@ public class TcpConfigInboundGatewayTests {
 		socket.setSoTimeout(5000);
 		String greetings = "Hello World!";
 		new ObjectOutputStream(socket.getOutputStream()).writeObject(greetings);
-		String echo = (String) new ObjectInputStream(socket.getInputStream()).readObject();
+		String echo = (String) createSafeObjectInputStream(socket.getInputStream()).readObject();
 		assertThat(echo).isEqualTo("echo:" + greetings);
 	}
 

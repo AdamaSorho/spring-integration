@@ -16,6 +16,7 @@
 
 package org.springframework.integration.ip.tcp;
 
+import io.github.pixee.security.ObjectInputFilters;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -122,6 +123,7 @@ public class TcpOutboundGatewayTests {
 				while (true) {
 					Socket socket = server.accept();
 					ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+					ObjectInputFilters.enableObjectFilterIfUnprotected(ois);
 					ois.readObject();
 					ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
 					oos.writeObject("Reply" + (i++));
@@ -186,6 +188,7 @@ public class TcpOutboundGatewayTests {
 				Socket socket = server.accept();
 				while (true) {
 					ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+					ObjectInputFilters.enableObjectFilterIfUnprotected(ois);
 					ois.readObject();
 					ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
 					oos.writeObject("Reply" + (i++));
@@ -242,6 +245,7 @@ public class TcpOutboundGatewayTests {
 				Socket socket = server.accept();
 				while (true) {
 					ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+					ObjectInputFilters.enableObjectFilterIfUnprotected(ois);
 					ois.readObject();
 					ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
 					Thread.sleep(1000);
@@ -367,6 +371,7 @@ public class TcpOutboundGatewayTests {
 					while (!socket.isClosed()) {
 						try {
 							ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+							ObjectInputFilters.enableObjectFilterIfUnprotected(ois);
 							String request = (String) ois.readObject();
 							logger.debug("Read " + request);
 							ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
@@ -467,6 +472,7 @@ public class TcpOutboundGatewayTests {
 					while (!socket.isClosed()) {
 						try {
 							ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+							ObjectInputFilters.enableObjectFilterIfUnprotected(ois);
 							String request = (String) ois.readObject();
 							logger.debug("Read " + request);
 							ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
@@ -549,6 +555,7 @@ public class TcpOutboundGatewayTests {
 					while (!socket.isClosed()) {
 						try {
 							ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+							ObjectInputFilters.enableObjectFilterIfUnprotected(ois);
 							String request = (String) ois.readObject();
 							logger.debug("Read " + request);
 							ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
@@ -700,6 +707,7 @@ public class TcpOutboundGatewayTests {
 					while (!socket1.isClosed()) {
 						try {
 							ObjectInputStream ois = new ObjectInputStream(socket1.getInputStream());
+							ObjectInputFilters.enableObjectFilterIfUnprotected(ois);
 							String request = (String) ois.readObject();
 							logger.debug("Read " + request + " closing socket");
 							socket1.close();

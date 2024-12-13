@@ -16,6 +16,7 @@
 
 package org.springframework.integration.ip.tcp;
 
+import static io.github.pixee.security.ObjectInputFilters.createSafeObjectInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -508,9 +509,9 @@ public class TcpReceivingChannelAdapterTests extends AbstractTcpChannelAdapterTe
 		Socket socket = SocketFactory.getDefault().createSocket("localhost", port);
 		socket.setSoTimeout(10000);
 		new ObjectOutputStream(socket.getOutputStream()).writeObject("Hello");
-		assertThat(new ObjectInputStream(socket.getInputStream()).readObject()).isEqualTo("world!");
+		assertThat(createSafeObjectInputStream(socket.getInputStream()).readObject()).isEqualTo("world!");
 		new ObjectOutputStream(socket.getOutputStream()).writeObject("Hello");
-		assertThat(new ObjectInputStream(socket.getInputStream()).readObject()).isEqualTo("world!");
+		assertThat(createSafeObjectInputStream(socket.getInputStream()).readObject()).isEqualTo("world!");
 		new ObjectOutputStream(socket.getOutputStream()).writeObject("Test1");
 		new ObjectOutputStream(socket.getOutputStream()).writeObject("Test2");
 		Set<String> results = new HashSet<String>();
@@ -545,16 +546,16 @@ public class TcpReceivingChannelAdapterTests extends AbstractTcpChannelAdapterTe
 		Socket socket = SocketFactory.getDefault().createSocket("localhost", port);
 		socket.setSoTimeout(10000);
 		new ObjectOutputStream(socket.getOutputStream()).writeObject("Hello");
-		assertThat(new ObjectInputStream(socket.getInputStream()).readObject()).isEqualTo("world!");
+		assertThat(createSafeObjectInputStream(socket.getInputStream()).readObject()).isEqualTo("world!");
 		new ObjectOutputStream(socket.getOutputStream()).writeObject("Hello");
-		assertThat(new ObjectInputStream(socket.getInputStream()).readObject()).isEqualTo("world!");
+		assertThat(createSafeObjectInputStream(socket.getInputStream()).readObject()).isEqualTo("world!");
 		new ObjectOutputStream(socket.getOutputStream()).writeObject("Test1");
 
 		socket = SocketFactory.getDefault().createSocket("localhost", port);
 		new ObjectOutputStream(socket.getOutputStream()).writeObject("Hello");
-		assertThat(new ObjectInputStream(socket.getInputStream()).readObject()).isEqualTo("world!");
+		assertThat(createSafeObjectInputStream(socket.getInputStream()).readObject()).isEqualTo("world!");
 		new ObjectOutputStream(socket.getOutputStream()).writeObject("Hello");
-		assertThat(new ObjectInputStream(socket.getInputStream()).readObject()).isEqualTo("world!");
+		assertThat(createSafeObjectInputStream(socket.getInputStream()).readObject()).isEqualTo("world!");
 		new ObjectOutputStream(socket.getOutputStream()).writeObject("Test2");
 		Message<?> message = channel.receive(10000);
 		assertThat(message).isNotNull();
@@ -591,17 +592,17 @@ public class TcpReceivingChannelAdapterTests extends AbstractTcpChannelAdapterTe
 		Socket socket1 = SocketFactory.getDefault().createSocket("localhost", port);
 		socket1.setSoTimeout(60000);
 		new ObjectOutputStream(socket1.getOutputStream()).writeObject("Hello");
-		assertThat(new ObjectInputStream(socket1.getInputStream()).readObject()).isEqualTo("world!");
+		assertThat(createSafeObjectInputStream(socket1.getInputStream()).readObject()).isEqualTo("world!");
 		new ObjectOutputStream(socket1.getOutputStream()).writeObject("Hello");
-		assertThat(new ObjectInputStream(socket1.getInputStream()).readObject()).isEqualTo("world!");
+		assertThat(createSafeObjectInputStream(socket1.getInputStream()).readObject()).isEqualTo("world!");
 		new ObjectOutputStream(socket1.getOutputStream()).writeObject("Test1");
 
 		Socket socket2 = SocketFactory.getDefault().createSocket("localhost", port);
 		socket2.setSoTimeout(60000);
 		new ObjectOutputStream(socket2.getOutputStream()).writeObject("Hello");
-		assertThat(new ObjectInputStream(socket2.getInputStream()).readObject()).isEqualTo("world!");
+		assertThat(createSafeObjectInputStream(socket2.getInputStream()).readObject()).isEqualTo("world!");
 		new ObjectOutputStream(socket2.getOutputStream()).writeObject("Hello");
-		assertThat(new ObjectInputStream(socket2.getInputStream()).readObject()).isEqualTo("world!");
+		assertThat(createSafeObjectInputStream(socket2.getInputStream()).readObject()).isEqualTo("world!");
 		new ObjectOutputStream(socket2.getOutputStream()).writeObject("Test2");
 
 		Message<?> message = channel.receive(10000);
@@ -611,8 +612,8 @@ public class TcpReceivingChannelAdapterTests extends AbstractTcpChannelAdapterTe
 		assertThat(message).isNotNull();
 		handler.handleMessage(message);
 
-		assertThat(new ObjectInputStream(socket1.getInputStream()).readObject()).isEqualTo("Test1");
-		assertThat(new ObjectInputStream(socket2.getInputStream()).readObject()).isEqualTo("Test2");
+		assertThat(createSafeObjectInputStream(socket1.getInputStream()).readObject()).isEqualTo("Test1");
+		assertThat(createSafeObjectInputStream(socket2.getInputStream()).readObject()).isEqualTo("Test2");
 	}
 
 	@Test
