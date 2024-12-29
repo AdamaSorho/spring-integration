@@ -16,6 +16,7 @@
 
 package org.springframework.integration.file.remote.gateway;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -643,7 +644,7 @@ public class RemoteFileOutboundGatewayTests {
 
 	private void assertContents(String expected, File outFile) throws Exception {
 		BufferedReader reader = new BufferedReader(new FileReader(outFile));
-		assertThat(reader.readLine()).isEqualTo(expected);
+		assertThat(BoundedLineReader.readLine(reader, 5_000_000)).isEqualTo(expected);
 		reader.close();
 	}
 
