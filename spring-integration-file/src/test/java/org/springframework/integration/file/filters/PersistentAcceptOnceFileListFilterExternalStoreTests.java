@@ -17,6 +17,7 @@
 package org.springframework.integration.file.filters;
 
 import java.io.File;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
@@ -125,7 +126,7 @@ public class PersistentAcceptOnceFileListFilterExternalStoreTests implements Red
 
 		final FileSystemPersistentAcceptOnceFileListFilter filter =
 				new FileSystemPersistentAcceptOnceFileListFilter(store, "foo:");
-		final File file = File.createTempFile("foo", ".txt");
+		final File file = Files.createTempFile("foo", ".txt").toFile();
 		assertThat(filter.filterFiles(new File[] {file})).hasSize(1);
 		String ts = store.get("foo:" + file.getAbsolutePath());
 		assertThat(ts).isEqualTo(String.valueOf(file.lastModified()));

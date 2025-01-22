@@ -21,6 +21,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetAddress;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -131,7 +132,7 @@ public class FtpOutboundTests {
 		handler.setBeanFactory(mock(BeanFactory.class));
 		handler.afterPropertiesSet();
 
-		File srcFile = File.createTempFile("testHandleFileMessage", ".tmp");
+		File srcFile = Files.createTempFile("testHandleFileMessage", ".tmp").toFile();
 		srcFile.deleteOnExit();
 
 		File destFile = new File(targetDir, srcFile.getName() + ".test");
@@ -175,7 +176,7 @@ public class FtpOutboundTests {
 		File targetDir = new File("remote-target-dir");
 		assertThat(targetDir.exists()).as("target directory does not exist: " + targetDir.getName()).isTrue();
 
-		File srcFile = File.createTempFile("testHandleFileMessage", ".tmp");
+		File srcFile = Files.createTempFile("testHandleFileMessage", ".tmp").toFile();
 		srcFile.deleteOnExit();
 
 		File destFile = new File(targetDir, srcFile.getName());

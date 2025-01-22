@@ -17,6 +17,7 @@
 package org.springframework.integration.file;
 
 import java.io.File;
+import java.nio.file.Files;
 import java.util.concurrent.CountDownLatch;
 
 import org.junit.After;
@@ -79,9 +80,9 @@ public class FileReadingMessageSourceIntegrationTests {
 
 	@Before
 	public void generateTestFiles() throws Exception {
-		File.createTempFile("test", null, inputDir).setLastModified(System.currentTimeMillis() - 1000);
-		File.createTempFile("test", null, inputDir).setLastModified(System.currentTimeMillis() - 1000);
-		File.createTempFile("test", null, inputDir).setLastModified(System.currentTimeMillis() - 1000);
+		Files.createTempFile(inputDir.toPath(), "test", null).toFile().setLastModified(System.currentTimeMillis() - 1000);
+		Files.createTempFile(inputDir.toPath(), "test", null).toFile().setLastModified(System.currentTimeMillis() - 1000);
+		Files.createTempFile(inputDir.toPath(), "test", null).toFile().setLastModified(System.currentTimeMillis() - 1000);
 	}
 
 	@After
