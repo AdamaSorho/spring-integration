@@ -16,6 +16,7 @@
 
 package org.springframework.integration.http.converter;
 
+import static io.github.pixee.security.ObjectInputFilters.createSafeObjectInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -64,7 +65,7 @@ public class SerializingHttpMessageConverter extends AbstractHttpMessageConverte
 	@SuppressWarnings("rawtypes")
 	public Serializable readInternal(Class clazz, HttpInputMessage inputMessage) throws IOException {
 		try {
-			return (Serializable) new ObjectInputStream(inputMessage.getBody()).readObject(); //NOSONAR
+			return (Serializable) createSafeObjectInputStream(inputMessage.getBody()).readObject(); //NOSONAR
 		}
 		catch (ClassNotFoundException e) {
 			throw new IllegalArgumentException(e);
