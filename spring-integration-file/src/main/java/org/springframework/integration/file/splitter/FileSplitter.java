@@ -16,6 +16,7 @@
 
 package org.springframework.integration.file.splitter;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.File;
@@ -229,7 +230,7 @@ public class FileSplitter extends AbstractMessageSplitter {
 
 		if (this.firstLineHeaderName != null) {
 			try {
-				firstLineAsHeader = bufferedReader.readLine();
+				firstLineAsHeader = BoundedLineReader.readLine(bufferedReader, 5_000_000);
 			}
 			catch (IOException e) {
 				throw new MessageHandlingException(message, "IOException while reading first line", e);
@@ -347,7 +348,7 @@ public class FileSplitter extends AbstractMessageSplitter {
 
 		private boolean hasNextLine() throws IOException {
 			if (!this.done && this.line == null) {
-				this.line = this.bufferedReader.readLine();
+				this.line = BoundedLineReader.readLine(this.bufferedReader, 5_000_000);
 			}
 			boolean ready = !this.done && this.line != null;
 			if (!ready) {

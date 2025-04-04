@@ -16,6 +16,7 @@
 
 package org.springframework.integration.http.outbound;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -73,9 +74,9 @@ public class CookieTests {
 
 		bos.close();
 		BufferedReader br = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(bos.toByteArray())));
-		String line = br.readLine();
+		String line = BoundedLineReader.readLine(br, 5_000_000);
 		assertThat(line).isEqualTo("Hello, world!Hello, again!Hello, once more!");
-		assertThat(br.readLine()).isNull();
+		assertThat(BoundedLineReader.readLine(br, 5_000_000)).isNull();
 		br.close();
 		assertThat(allHeaders.size()).isEqualTo(3);
 		assertThat(allHeaders.get(0).containsKey("Cookie")).isFalse();
