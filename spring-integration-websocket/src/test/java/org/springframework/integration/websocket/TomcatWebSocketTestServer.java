@@ -18,6 +18,7 @@ package org.springframework.integration.websocket;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 
 import org.apache.catalina.Context;
 import org.apache.catalina.Wrapper;
@@ -59,7 +60,7 @@ public class TomcatWebSocketTestServer implements InitializingBean, DisposableBe
 
 	private String createTempDir() {
 		try {
-			File tempFolder = File.createTempFile("tomcat.", ".workDir");
+			File tempFolder = Files.createTempFile("tomcat.", ".workDir").toFile();
 			tempFolder.delete();
 			tempFolder.mkdir();
 			tempFolder.deleteOnExit();

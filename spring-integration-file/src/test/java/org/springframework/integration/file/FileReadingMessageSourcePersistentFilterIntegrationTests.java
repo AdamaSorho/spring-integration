@@ -17,6 +17,7 @@
 package org.springframework.integration.file;
 
 import java.io.File;
+import java.nio.file.Files;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -59,9 +60,9 @@ public class FileReadingMessageSourcePersistentFilterIntegrationTests {
 
 	@Before
 	public void generateTestFiles() throws Exception {
-		File.createTempFile("test", null, inputDir).setLastModified(System.currentTimeMillis() - 1000);
-		File.createTempFile("test", null, inputDir).setLastModified(System.currentTimeMillis() - 1000);
-		File.createTempFile("test", null, inputDir).setLastModified(System.currentTimeMillis() - 1000);
+		Files.createTempFile(inputDir.toPath(), "test", null).toFile().setLastModified(System.currentTimeMillis() - 1000);
+		Files.createTempFile(inputDir.toPath(), "test", null).toFile().setLastModified(System.currentTimeMillis() - 1000);
+		Files.createTempFile(inputDir.toPath(), "test", null).toFile().setLastModified(System.currentTimeMillis() - 1000);
 		this.loadContextAndGetMessageSource();
 	}
 
