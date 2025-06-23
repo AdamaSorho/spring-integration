@@ -16,6 +16,7 @@
 
 package org.springframework.integration.ip.tcp.serializer;
 
+import io.github.pixee.security.ObjectInputFilters;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -201,6 +202,7 @@ public class SerializationTests {
 		socket.setSoTimeout(5000);
 		InputStream is = socket.getInputStream();
 		ObjectInputStream ois = new ObjectInputStream(is);
+		ObjectInputFilters.enableObjectFilterIfUnprotected(ois);
 		assertThat(ois.readObject()).isEqualTo(testString);
 		ois = new ObjectInputStream(is);
 		assertThat(ois.readObject()).isEqualTo(testString);
