@@ -16,6 +16,7 @@
 
 package org.springframework.integration.ip.tcp.connection;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -212,7 +213,7 @@ public class FailoverClientConnectionFactoryTests {
 		exec.submit(() -> {
 			Socket accepted = ss1.accept();
 			BufferedReader br = new BufferedReader(new InputStreamReader(accepted.getInputStream()));
-			br.readLine();
+			BoundedLineReader.readLine(br, 5_000_000);
 			accepted.getOutputStream().write("ok\r\n".getBytes());
 			accepted.close();
 			ss1.close();

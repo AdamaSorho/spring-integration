@@ -16,6 +16,7 @@
 
 package org.springframework.integration.xml.source;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 
 import org.junit.jupiter.api.Test;
@@ -48,7 +49,7 @@ public class StringSourceTests {
 		Document doc = XmlTestUtil.getDocumentForString(testDoc);
 		StringSource source = (StringSource) sourceFactory.createSource(doc);
 		BufferedReader reader = new BufferedReader(source.getReader());
-		String docAsString = reader.readLine();
+		String docAsString = BoundedLineReader.readLine(reader, 5_000_000);
 
 		assertThat(docAsString).and(testDoc).areIdentical();
 	}
@@ -59,7 +60,7 @@ public class StringSourceTests {
 		String docString = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><item>one</item>";
 		StringSource source = (StringSource) sourceFactory.createSource(docString);
 		BufferedReader reader = new BufferedReader(source.getReader());
-		String docAsString = reader.readLine();
+		String docAsString = BoundedLineReader.readLine(reader, 5_000_000);
 
 		assertThat(docAsString).and(docString).areIdentical();
 	}
