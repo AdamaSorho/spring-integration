@@ -17,6 +17,7 @@
 package org.springframework.integration.file;
 
 import java.io.File;
+import java.nio.file.Files;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -51,7 +52,7 @@ public class FileToChannelIntegrationTests {
 
 	@Test
 	public void fileMessageToChannel() throws Exception {
-		File file = File.createTempFile("test", null, inputDirectory);
+		File file = Files.createTempFile(inputDirectory.toPath(), "test", null).toFile();
 		file.setLastModified(System.currentTimeMillis() - 1000);
 
 		Message<?> received = this.fileMessages.receive(10000);
@@ -64,7 +65,7 @@ public class FileToChannelIntegrationTests {
 
 	@Test
 	public void directoryExhaustion() throws Exception {
-		File.createTempFile("test", null, inputDirectory).setLastModified(System.currentTimeMillis() - 1000);
+		Files.createTempFile(inputDirectory.toPath(), "test", null).toFile().setLastModified(System.currentTimeMillis() - 1000);
 		Message<?> received = this.fileMessages.receive(10000);
 		assertThat(received).isNotNull();
 		assertThat(fileMessages.receive(200)).isNull();

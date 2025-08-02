@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -95,7 +96,7 @@ public class SftpOutboundTests {
 		handler.setBeanFactory(mock(BeanFactory.class));
 		handler.afterPropertiesSet();
 
-		File srcFile = File.createTempFile("testHandleFileMessage", ".tmp", new File("."));
+		File srcFile = Files.createTempFile(new File(".").toPath(), "testHandleFileMessage", ".tmp").toFile();
 		srcFile.deleteOnExit();
 
 		File destFile = new File(targetDir, srcFile.getName() + ".test");
@@ -158,7 +159,7 @@ public class SftpOutboundTests {
 		File targetDir = new File("remote-target-dir");
 		assertThat(targetDir.exists()).as("target directory does not exist: " + targetDir.getName()).isTrue();
 
-		File srcFile = File.createTempFile("testHandleFileMessage", ".tmp");
+		File srcFile = Files.createTempFile("testHandleFileMessage", ".tmp").toFile();
 		srcFile.deleteOnExit();
 
 		File destFile = new File(targetDir, srcFile.getName());

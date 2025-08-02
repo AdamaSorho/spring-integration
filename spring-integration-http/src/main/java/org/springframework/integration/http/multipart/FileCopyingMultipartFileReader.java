@@ -18,6 +18,7 @@ package org.springframework.integration.http.multipart;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -82,7 +83,7 @@ public class FileCopyingMultipartFileReader implements MultipartFileReader<Multi
 
 	@Override
 	public MultipartFile readMultipartFile(MultipartFile multipartFile) throws IOException {
-		File upload = File.createTempFile(this.prefix, this.suffix, this.directory);
+		File upload = Files.createTempFile(this.directory.toPath(), this.prefix, this.suffix).toFile();
 		multipartFile.transferTo(upload);
 		UploadedMultipartFile uploadedMultipartFile = new UploadedMultipartFile(upload, multipartFile.getSize(),
 				multipartFile.getContentType(), multipartFile.getName(), multipartFile.getOriginalFilename());

@@ -21,6 +21,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
@@ -207,7 +208,7 @@ public class UnZipTransformerTests {
 
 	@Test
 	public void unzipInvalidZipFile() throws IOException {
-		File fileToUnzip = File.createTempFile("test1", "tmp");
+		File fileToUnzip = Files.createTempFile("test1", "tmp").toFile();
 		FileUtils.writeStringToFile(fileToUnzip, "hello world", Charset.defaultCharset());
 
 		UnZipTransformer unZipTransformer = new UnZipTransformer();

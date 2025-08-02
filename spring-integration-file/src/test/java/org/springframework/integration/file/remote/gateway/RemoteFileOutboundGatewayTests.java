@@ -910,7 +910,7 @@ public class RemoteFileOutboundGatewayTests {
 		new File(tempFolder, "baz.txt").createNewFile();
 		new File(tempFolder, "qux.txt").createNewFile();
 		File dir1 = Files.createTempDirectory(tempFolder.toPath(), "junit").toFile();
-		File file3 = File.createTempFile("foo", ".txt", dir1);
+		File file3 = Files.createTempFile(dir1.toPath(), "foo", ".txt").toFile();
 
 		Message<File> requestMessage = MessageBuilder.withPayload(tempFolder)
 				.build();
