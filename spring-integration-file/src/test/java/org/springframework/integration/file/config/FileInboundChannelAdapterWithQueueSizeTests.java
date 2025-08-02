@@ -17,6 +17,7 @@
 package org.springframework.integration.file.config;
 
 import java.io.File;
+import java.nio.file.Files;
 import java.util.List;
 
 import org.junit.AfterClass;
@@ -78,9 +79,9 @@ public class FileInboundChannelAdapterWithQueueSizeTests {
 
 	@Before
 	public void generateTestFiles() throws Exception {
-		File.createTempFile("test", null, inputDir).setLastModified(System.currentTimeMillis() - 1000);
-		File.createTempFile("test", null, inputDir).setLastModified(System.currentTimeMillis() - 1000);
-		File.createTempFile("test", null, inputDir).setLastModified(System.currentTimeMillis() - 1000);
+		Files.createTempFile(inputDir.toPath(), "test", null).toFile().setLastModified(System.currentTimeMillis() - 1000);
+		Files.createTempFile(inputDir.toPath(), "test", null).toFile().setLastModified(System.currentTimeMillis() - 1000);
+		Files.createTempFile(inputDir.toPath(), "test", null).toFile().setLastModified(System.currentTimeMillis() - 1000);
 	}
 
 	@Test
